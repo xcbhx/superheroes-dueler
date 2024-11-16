@@ -1,3 +1,5 @@
+import random
+
 class Hero:
     # We want our hero to have a default "starting_health",
     # so we can set that in the function header.
@@ -16,9 +18,25 @@ class Hero:
         self.current_health = starting_health
 
 
+    def fight(self, opponent):
+        '''Current Hero will take turns fighting the opponent hero passed in.
+        '''
+        # TODO: Fight each hero until a victor emerges.
+        # Phases to implement:
+        #1) randomly choose winner,
+        # Hint: Look into random library, more specifically the choice method
+        winner = random.choice([self, opponent])
+        loser = self if winner == opponent else opponent
+        print(f'{winner.name} defeats {loser.name}!')
+
+
+
+
 if __name__ == "__main__":
-    # If you run this file from the terminal
-    # this block is executed.
-    my_hero = Hero("Grace Hopper", 200)
-    print(my_hero.name)
-    print(my_hero.current_health)
+
+    # Instantiate two heros 
+    hero1 = Hero('Wonder Woman', 150)
+    hero2 = Hero("Dumbledore", 180)
+
+    # Trigger a fight between the two heroes
+    hero1.fight(hero2)
