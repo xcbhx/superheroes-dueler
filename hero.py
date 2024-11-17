@@ -28,15 +28,31 @@ class Hero:
 
 
     def fight(self, opponent):
-        '''Current Hero will take turns fighting the opponent hero passed in.
-        '''
+        '''Current Hero will take turns fighting the opponent hero passed in.'''
         # TODO: Fight each hero until a victor emerges.
-        # Phases to implement:
-        #1) randomly choose winner,
-        # Hint: Look into random library, more specifically the choice method
-        winner = random.choice([self, opponent])
-        loser = self if winner == opponent else opponent
-        print(f'{winner.name} defeats {loser.name}!')
+        # 0) check if at least one hero has abilities. If no hero has abilities, print "Draw"
+        if not self.abilities and not opponent.abilities:
+            print('Draw')
+            return
+        # 1) else, start the fighting loop until a hero has won
+        while self.is_alive() and opponent.is_alive():
+        # 2) the hero (self) and their opponent must attack each other and each must take damage from the other's attack
+            opponent_damage = self.attack()
+            opponent.take_damage(opponent_damage)
+        # 3) After each attack, check if either the hero (self) or the opponent is alive
+            if not opponent.is_alive():
+                print(f'{self.name} won!')
+                return
+            
+            # Opponent attacks the hero
+            self_damage = opponent.attack()
+            self.take_damage(self_damage)
+
+        # 4) if one of them has died, print "HeroName won!" replacing HeroName with the name of the hero, and end the fight loop
+            if not self.is_alive():
+                print(f'{opponent.name} won!')
+                return
+
 
     def add_ability(self, ability):
         '''Add ability to abilities list'''
@@ -92,43 +108,53 @@ class Hero:
             return False
         else:
             return True
-
-
-
+        
 
 
 
 if __name__ == '__main__':
 
     # Instantiate heros 
-    hero1 = Hero('Wonder Woman', 150)
-    hero2 = Hero('Dumbledore', 180)
+    hero1 = Hero('Wonder Woman')
+    hero2 = Hero('Dumbledore')
 
-    ability = Ability('Great Debugging', 50)
-    armor = Armor('Great Debugging', 20)
-    another_ability = Ability('Smarty Pants', 90)
-    another_armor = Armor('Fight', 30)
+    # Create abilities and armor
+    # ability = Ability('Great Debugging', 50)
+    # armor = Armor('Great Debugging', 20)
+    # another_ability = Ability('Smarty Pants', 90)
+    # another_armor = Armor('Fight', 30)
+    ability1 = Ability('Super Speed', 300)
+    ability2 = Ability('Super Eyes', 130)
+    ability3 = Ability('Wizard Wand', 80)
+    ability4 = Ability('Wizard', 20)
 
-    hero = Hero('Grace Hopper', 200)
-    shield = Armor('Shield', 50)
+    # Create another hero and add abilities/armor
+    # hero = Hero('Grace Hopper', 200)
+    # shield = Armor('Shield', 50)
 
-    hero.add_ability(ability)
-    hero.add_armor(armor)
-    hero.add_ability(another_ability)
-    hero.add_armor(another_armor)
-    hero.add_armor(shield)
-    
-    hero.take_damage(150)
-    print(hero.is_alive())
-    hero.take_damage(15000)
-    print(hero.is_alive())
+    # hero.add_ability(ability)
+    # hero.add_armor(armor)
+    # hero.add_ability(another_ability)
+    # hero.add_armor(another_armor)
+    # hero.add_armor(shield)
+    hero1.add_ability(ability1)
+    hero1.add_ability(ability2)
+    hero2.add_ability(ability3)
+    hero2.add_ability(ability4)
+
+    # Test damage and is_alive
+    # print('\n=== Testing Damage and Health ===')
+    # hero.take_damage(150)
+    # print(hero.is_alive())
+    # hero.take_damage(15000)
+    # print(hero.is_alive())
 
     # Trigger a fight between the two heroes
     print('\n=== Hero Fight ===')
     hero1.fight(hero2)
 
     # Test attack and defend
-    print('\n=== Hero Stats ===')
-    print('Attack Damage:', hero.attack())
-    print('Total Defense:', hero.defend())
-    print(f'Current Health: {hero.current_health}')
+    # print('\n=== Hero Stats ===')
+    # print('Attack Damage:', hero.attack())
+    # print('Total Defense:', hero.defend())
+    # print(f'Current Health: {hero.current_health}')
