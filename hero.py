@@ -83,6 +83,16 @@ class Hero:
         # Update the hero's health
         self.current_health -= damage_to_take
 
+    def is_alive(self):
+        '''Return True or False depending on whether the hero is alive or not.'''
+        # TODO: Check the current_health of the hero.
+        # if it is <= 0, then return False. Otherwise, they still have health
+        # and are therefore alive, so return True
+        if self.current_health <= 0:
+            return False
+        else:
+            return True
+
 
 
 
@@ -107,7 +117,11 @@ if __name__ == '__main__':
     hero.add_ability(another_ability)
     hero.add_armor(another_armor)
     hero.add_armor(shield)
-    hero.take_damage(50)
+    
+    hero.take_damage(150)
+    print(hero.is_alive())
+    hero.take_damage(15000)
+    print(hero.is_alive())
 
     # Trigger a fight between the two heroes
     print('\n=== Hero Fight ===')
