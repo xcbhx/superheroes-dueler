@@ -54,8 +54,25 @@ class Hero:
             # add the damage of each attack to our running total
             total_damage += ability.attack()
             # return the total damage 
-            return total_damage
+        return total_damage
+        
+    def add_armor(self, armor):
+        '''Add armor to self.armors
+            Armor: Armor Object
+        '''
+        self.armors.append(armor)
 
+    def defend(self):
+        '''Calculate the total block amount from all armor blocks.
+            return: total_block:Int
+        '''
+        if self.current_health <= 0:
+            return 0 # Hero is dead, no defense
+        
+        total_defense = 0
+        for armor in self.armors:
+            total_defense += armor.block()
+        return total_defense
 
 
 
@@ -69,11 +86,22 @@ if __name__ == '__main__':
     hero2 = Hero('Dumbledore', 180)
 
     # Trigger a fight between the two heroes
+    print('\n=== Hero Fight ===')
     hero1.fight(hero2)
 
     ability = Ability('Great Debugging', 50)
+    armor = Armor('Great Debugging', 20)
     another_ability = Ability('Smarty Pants', 90)
+    another_armor = Armor('Fight', 30)
+
     hero = Hero('Grace Hopper', 200)
+
     hero.add_ability(ability)
+    hero.add_armor(armor)
     hero.add_ability(another_ability)
-    print(hero.attack())
+    hero.add_armor(another_armor)
+
+    # Test attack and defend
+    print('\n=== Hero Stats ===')
+    print('Attack Damage:', hero.attack())
+    print('Total Defense:', hero.defend())
