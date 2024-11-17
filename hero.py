@@ -73,6 +73,15 @@ class Hero:
         for armor in self.armors:
             total_defense += armor.block()
         return total_defense
+    
+    def take_damage(self, damage):
+        '''Updates self.current_health to reflect the damage minus the denfense.'''
+        # Calculate the defense
+        defense = self.defend()
+        # Subtract the defense from the incoming damage
+        damage_to_take = max(0, damage - defense) # ensure no negative damage
+        # Update the hero's health
+        self.current_health -= damage_to_take
 
 
 
@@ -81,13 +90,9 @@ class Hero:
 
 if __name__ == '__main__':
 
-    # Instantiate two heros 
+    # Instantiate heros 
     hero1 = Hero('Wonder Woman', 150)
     hero2 = Hero('Dumbledore', 180)
-
-    # Trigger a fight between the two heroes
-    print('\n=== Hero Fight ===')
-    hero1.fight(hero2)
 
     ability = Ability('Great Debugging', 50)
     armor = Armor('Great Debugging', 20)
@@ -95,13 +100,21 @@ if __name__ == '__main__':
     another_armor = Armor('Fight', 30)
 
     hero = Hero('Grace Hopper', 200)
+    shield = Armor('Shield', 50)
 
     hero.add_ability(ability)
     hero.add_armor(armor)
     hero.add_ability(another_ability)
     hero.add_armor(another_armor)
+    hero.add_armor(shield)
+    hero.take_damage(50)
+
+    # Trigger a fight between the two heroes
+    print('\n=== Hero Fight ===')
+    hero1.fight(hero2)
 
     # Test attack and defend
     print('\n=== Hero Stats ===')
     print('Attack Damage:', hero.attack())
     print('Total Defense:', hero.defend())
+    print(f'Current Health: {hero.current_health}')
