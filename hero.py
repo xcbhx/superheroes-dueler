@@ -1,5 +1,6 @@
 from ability import Ability
 from armor import Armor
+from weapon import Weapon
 
 import random
 
@@ -109,14 +110,23 @@ class Hero:
         else:
             return True
         
+    def add_weapon(self, weapon):
+        '''Add weapon to self.abilities'''
+        self.abilities.append(weapon)
+        
 
 
 
 if __name__ == '__main__':
 
-    # Instantiate heros 
+    # Instantiate Hero and Weapon
+    hero = Hero('Wonder Woman')
+    weapon = Weapon('Lasso of Truth', 90)
+
+    # Instantiate more heores for fight testing
     hero1 = Hero('Wonder Woman')
     hero2 = Hero('Dumbledore')
+
 
     # Create abilities and armor
     # ability = Ability('Great Debugging', 50)
@@ -132,6 +142,7 @@ if __name__ == '__main__':
     # hero = Hero('Grace Hopper', 200)
     # shield = Armor('Shield', 50)
 
+    # Add abilities to heroes
     # hero.add_ability(ability)
     # hero.add_armor(armor)
     # hero.add_ability(another_ability)
@@ -141,6 +152,10 @@ if __name__ == '__main__':
     hero1.add_ability(ability2)
     hero2.add_ability(ability3)
     hero2.add_ability(ability4)
+
+    # Add weapon to the hero
+    hero.add_weapon(weapon)
+    print(f'Weapon Attack Damage: {hero.attack()}')
 
     # Test damage and is_alive
     # print('\n=== Testing Damage and Health ===')
