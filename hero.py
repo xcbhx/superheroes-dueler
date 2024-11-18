@@ -45,6 +45,9 @@ class Hero:
         # 3) After each attack, check if either the hero (self) or the opponent is alive
             if not opponent.is_alive():
                 print(f'{self.name} won!')
+                # Update statistics (helper method)
+                self.add_kill(1)
+                opponent.add_death(1)
                 return
             
             # Opponent attacks the hero
@@ -54,7 +57,11 @@ class Hero:
         # 4) if one of them has died, print "HeroName won!" replacing HeroName with the name of the hero, and end the fight loop
             if not self.is_alive():
                 print(f'{opponent.name} won!')
+                # Update statistics
+                opponent.add_kill(1)
+                self.add_death(1)
                 return
+            
 
 
     def add_ability(self, ability):
