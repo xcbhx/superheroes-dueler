@@ -37,30 +37,31 @@ class Hero:
         if not self.abilities and not opponent.abilities:
             print('Draw')
             return
-        # 1) else, start the fighting loop until a hero has won
-        while self.is_alive() and opponent.is_alive():
-        # 2) the hero (self) and their opponent must attack each other and each must take damage from the other's attack
-            opponent_damage = self.attack()
-            opponent.take_damage(opponent_damage)
-        # 3) After each attack, check if either the hero (self) or the opponent is alive
-            if not opponent.is_alive():
-                print(f'{self.name} won!')
-                # Update statistics (helper method)
-                self.add_kill(1)
-                opponent.add_death(1)
-                return
-            
-            # Opponent attacks the hero
-            self_damage = opponent.attack()
-            self.take_damage(self_damage)
+        else:
+         # 1) else, start the fighting loop until a hero has won
+            while self.is_alive() and opponent.is_alive():
+            # 2) the hero (self) and their opponent must attack each other and each must take damage from the other's attack
+                opponent_damage = self.attack()
+                opponent.take_damage(opponent_damage)
+            # 3) After each attack, check if either the hero (self) or the opponent is alive
+                if not opponent.is_alive():
+                    print(f'{self.name} won!')
+                    # Update statistics (helper method)
+                    self.add_kill(1)
+                    opponent.add_death(1)
+                    return
+                
+                # Opponent attacks the hero
+                self_damage = opponent.attack()
+                self.take_damage(self_damage)
 
-        # 4) if one of them has died, print "HeroName won!" replacing HeroName with the name of the hero, and end the fight loop
-            if not self.is_alive():
-                print(f'{opponent.name} won!')
-                # Update statistics
-                opponent.add_kill(1)
-                self.add_death(1)
-                return
+            # 4) if one of them has died, print "HeroName won!" replacing HeroName with the name of the hero, and end the fight loop
+                if not self.is_alive():
+                    print(f'{opponent.name} won!')
+                    # Update statistics
+                    opponent.add_kill(1)
+                    self.add_death(1)
+                    return
             
 
 
@@ -92,13 +93,9 @@ class Hero:
         '''Calculate the total block amount from all armor blocks.
             return: total_block:Int
         '''
-        if self.current_health <= 0:
-            return 0 # Hero is dead, no defense
-        
-        total_defense = 0
-        for armor in self.armors:
-            total_defense += armor.block()
-        return total_defense
+        if not self.is_alive():
+            return 0
+        return sum(armor.block() for armor in self.armors)
     
     def take_damage(self, damage):
         '''Updates self.current_health to reflect the damage minus the denfense.'''
