@@ -32,7 +32,7 @@ class Hero:
 
     def fight(self, opponent):
         '''Current Hero will take turns fighting the opponent hero passed in.'''
-        # TODO: Fight each hero until a victor emerges.
+        # Fight each hero until a victor emerges.
         # 0) check if at least one hero has abilities. If no hero has abilities, print "Draw"
         if not self.abilities and not opponent.abilities:
             print('Draw')
@@ -104,7 +104,6 @@ class Hero:
 
     def is_alive(self):
         '''Return True or False depending on whether the hero is alive or not.'''
-        # TODO: Check the current_health of the hero.
         # if it is <= 0, then return False. Otherwise, they still have health
         # and are therefore alive, so return True
         if self.current_health <= 0:
@@ -120,6 +119,9 @@ class Hero:
         '''Update self.kills by num_kills amount'''
         self.kills += num_kills
         
+    def add_death(self, num_deaths):
+        '''Update deaths with num_deaths'''
+        self.deaths += num_deaths
 
 
 
