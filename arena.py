@@ -38,3 +38,23 @@ class Arena:
 
         # return the new weapon object.
         return Weapon(weapon_name, weapon_damage)
+    
+    def create_armor(self):
+        '''Prompt user for Armor information
+        return Armor with values from user input.
+        '''
+        # TODO:This method will allow a user to create a piece of armor.
+        #  Prompt the user for the armor's name
+        armor_name = input('Enter the name of the armor: ')
+
+        # Prompt the user for the armor's max block value
+        try:
+            armor_max_block = int(input(f'Enter the maximum block value for {armor_name}: '))
+        except ValueError:
+            print('Invalid input. Maximum block value must be a number. Defaulting to 10.')
+            armor_max_block = 10
+        #  return the new armor object with values set by user.
+        return Armor(armor_name, armor_max_block)
+    
+
+    
