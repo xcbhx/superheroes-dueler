@@ -83,7 +83,7 @@ class Arena:
                 hero.add_ability(armor)
                 print(f'Added armor: {armor.name}')
             elif add_item == '4':
-                print(f'Finished cerating hero: {hero.name}')
+                print(f'Finished creating hero: {hero.name}')
             else:
                 print('Invalid choice. Please try again.')
         return hero
@@ -91,6 +91,8 @@ class Arena:
 
     def build_team_one(self):
         '''Prompt the user to build team_one '''
+        team_name = input('Enter the name of Team One: ')
+        self.team_one = Team(team_name) # Initialize team_one with a name
         num_of_team_members = int(input('How many members would you like on Team One?\n'))
         for i in range(num_of_team_members):
             hero = self.create_hero()
@@ -98,6 +100,8 @@ class Arena:
 
     def build_team_two(self):
         '''Prompt the user to build team_two'''
+        team_name = input('Enter the name of Team Two: ')
+        self.team_two = Team(team_name) # Initialize team_two with a name
         # Prompt for the number of team members
         num_of_team_members = int(input('How many members would you like on Team Two?\n'))
         # Create each hero and add them to team_two
@@ -115,12 +119,83 @@ class Arena:
         print(f'{self.team_one.name} and {self.team_two.name} are battling!')
         self.team_one.attack(self.team_two)
 
+    def show_stats(self):
+        '''Prints team statistics to terminal.'''
+        print('\n')
+        print(f'{self.team_one.name} statistics:')
+        self.team_one.stats()
+        print('\n')
+        print(f'{self.team_two.name} statistics:')
+        self.team_two.stats()
+        print('\n')
+
+        # Calculate average K/D for Team One
+        team_one_kills = 0
+        team_one_deaths = 0
+        for hero in self.team_one.heroes:
+            team_one_kills += hero.kills
+            team_one_deaths += hero.deaths
+        if team_one_deaths == 0:
+            team_one_deaths = 1  # Avoid division by zero
+        print(f'{self.team_one.name} average K/D was: {team_one_kills / team_one_deaths:.2f}')
+
+        # Calculate average K/D for Team Two
+        team_two_kills = 0
+        team_two_deaths = 0
+        for hero in self.team_two.heroes:
+            team_two_kills += hero.kills
+            team_two_deaths += hero.deaths
+        if team_two_deaths == 0:
+            team_two_deaths = 1  # Avoid division by zero
+        print(f'{self.team_two.name} average K/D was: {team_two_kills / team_two_deaths:.2f}')
+
+        print('\nSurviving heroes:')
+        # List surviving heroes from Team One
+        print(f'Survivors from {self.team_one.name}:')
+        team_one_survivors = [hero.name for hero in self.team_one.heroes if hero.is_alive()]
+        if team_one_survivors:
+            print(', '.join(team_one_survivors))
+        else:
+            print('No survivors')
+
+        # List surviving heroes from Team Two
+        print(f'Survivors from {self.team_two.name}:')
+        team_two_survivors = [hero.name for hero in self.team_two.heroes if hero.is_alive()]
+        if team_two_survivors:
+            print(', '.join(team_two_survivors))
+        else:
+            print('No survivors')
+
+        # Declare the winning team
+        if len(team_one_survivors) > len(team_two_survivors):
+            print(f'\n{self.team_one.name} wins!')
+        elif len(team_two_survivors) > len(team_one_survivors):
+            print(f'\n{self.team_two.name} wins!')
+        else:
+            print("\nIt's a tie!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    game_is_running = True
 
+    # Instantiate Game Arena
     arena = Arena()
+
+    #Build Teams
     arena.build_team_one()
     arena.build_team_two()
-    arena.team_battle()
-    arena.show_stats()
+
+    while game_is_running:
+
+        arena.team_battle()
+        arena.show_stats()
+        play_again = input('Play Again? Y or N: ')
+
+        #Check for Player Input
+        if play_again.lower() == 'n':
+            game_is_running = False
+
+        else:
+            #Revive heroes to play again
+            arena.team_one.revive_heroes()
+            arena.team_two.revive_heroes()
