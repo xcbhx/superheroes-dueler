@@ -87,3 +87,20 @@ class Arena:
             else:
                 print('Invalid choice. Please try again.')
         return hero
+    
+
+    def build_team_one(self):
+        '''Prompt the user to build team_one '''
+        num_of_team_members = int(input("How many members would you like on Team One?\n"))
+        for i in range(num_of_team_members):
+            hero = self.create_hero()
+            self.team_one.add_hero(hero)
+
+    def build_team_two(self):
+        '''Prompt the user to build team_two'''
+        # Prompt for the number of team members
+        num_of_team_members = int(input('How many members would you like on Team Two?\n'))
+        # Create each hero and add them to team_two
+        for i in range(num_of_team_members):
+            hero = self.create_hero()
+            self.team_two.add_hero(hero)
