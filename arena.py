@@ -91,7 +91,7 @@ class Arena:
 
     def build_team_one(self):
         '''Prompt the user to build team_one '''
-        num_of_team_members = int(input("How many members would you like on Team One?\n"))
+        num_of_team_members = int(input('How many members would you like on Team One?\n'))
         for i in range(num_of_team_members):
             hero = self.create_hero()
             self.team_one.add_hero(hero)
@@ -104,3 +104,23 @@ class Arena:
         for i in range(num_of_team_members):
             hero = self.create_hero()
             self.team_two.add_hero(hero)
+
+    def team_battle(self):
+        '''Battle team_one and team_two together.'''
+        # Ensure both teams exist
+        if not self.team_one or not self.team_two:
+            print('Both teams need to be created before a battle can occur.')
+            return
+        
+        print(f'{self.team_one.name} and {self.team_two.name} are battling!')
+        self.team_one.attack(self.team_two)
+
+
+
+if __name__ == '__main__':
+
+    arena = Arena()
+    arena.build_team_one()
+    arena.build_team_two()
+    arena.team_battle()
+    arena.show_stats()
