@@ -57,4 +57,33 @@ class Arena:
         return Armor(armor_name, armor_max_block)
     
 
-    
+    def create_hero(self):
+        '''Prompt user for Hero information
+        return Hero with values from user input.
+        '''
+        hero_name = input("Hero's name: ")
+        hero = Hero(hero_name) # Create the hero object
+
+        add_item = None
+        while add_item != '4': #Keep looping until the user chooses 'Done'
+            add_item = input('[1] Add ability\n[2] Add weapon\n[3] Add armor\n[4] Done adding item\n\nYour choice: ')
+            if add_item == '1':
+                # Add an ability to the hero
+                ability = self.create_ability()
+                hero.add_ability(ability)
+                print(f'Added ability: {ability.name}')
+            elif add_item == "2":
+                # Add a weapon to the hero
+                weapon = self.create_weapon()
+                hero.add_ability(weapon)
+                print(f'Added weapon: {weapon.name}')
+            elif add_item == "3":
+                # Add an armor to the hero
+                armor = self.create_armor()
+                hero.add_ability(armor)
+                print(f'Added armor: {armor.name}')
+            elif add_item == '4':
+                print(f'Finished cerating hero: {hero.name}')
+            else:
+                print('Invalid choice. Please try again.')
+        return hero
